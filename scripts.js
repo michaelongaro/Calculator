@@ -5,7 +5,12 @@ let previousOperator = undefined;
 let tempResult = 0;
 let evalExpression = "";
 let totalValue = undefined;
-let allowedOperator = undefined;
+let stagedOperator = undefined;
+let opArr = new Array(4).fill(false);
+let addBool = false;
+let subBool = false;
+let multBool = false;
+let divBool = false;
 
 window.onload = function () {
     
@@ -80,7 +85,13 @@ window.onload = function () {
     $("#divide")
         .click(function () {
             /* still want to change only one op at a time EXCEPT FOR '-' */
-            evalExpression += " / ";
+            if (checkOperatorOrder(evalExpression)) {
+                console.log(evalExpression.substr(0, -3));
+                evalExpression = evalExpression.substr(0, -3) + " / ";
+            }
+            else {
+                evalExpression += " / ";
+            }
             document.getElementById("decimal").disabled = false;
             document.getElementById("display").innerHTML += " / ";
         })
@@ -107,7 +118,14 @@ window.onload = function () {
 
     $("#add")
         .click(function () {
-            evalExpression += " + ";
+            if (addBool) {
+                
+            }
+            else {
+                /* validate new operator here (?) */
+                stagedOperator = " + ";
+            }
+            evalExpression += stagedOperator;
             document.getElementById("decimal").disabled = false;
             document.getElementById("display").innerHTML += " + ";
         })
@@ -168,25 +186,52 @@ window.onload = function () {
             else if (operation == "%") {
                 return operate(num1, num2, previousOperator) / 100;
             }
-
             else if (operation == "+/-") {
                 return num1 * num2;
             } */
 
 }
 
-function checkOperatorOrder(expressionString) {
-    let splitOp = expressionString[-2];
-    switch (splitOp) {
-        case "*":
-            return true;
-        case "/":
-            return true;
-        case "+":
-            return true;
-        case "-":
-            return true;
+function checkOperatorOrder(givenOp) {
+    /* make arr of len 4, and add up total of arr, if > 0,
+            then reset all operators, and put new one in (spec. case on '-') */
+    /* opArr.reduce((a, b) => a + b, 0); should give the sum */
+    for (let p = 0; p < opArr.length; p++) {
+            if (givenOp == "+") {
+                if (!opArr[0]) {
+                    evalExpression += " + ";
+                }
+            }
+            else if (givenOp == "-") {
+                
+            }
+            else if (givenOp == "*") {
+                
+            }
+            else if (givenOp == "/") {
+                
+            } 
     }
+    
+    else {
+        stagedOperator = "";
+        /* maybe need to reset arr with zeros across board */
+        switch (givenOp) {
+            case "+":
+                opArr[0] += 1;
+                return " + ";
+            case "-":
+                opArr[1] += 1;
+                return " - ";
+            case "*":
+                opArr[2] += 1;
+                return " * ";
+            case "/":
+                opArr[3] += 1;
+                return " / ";
+        }
+    }
+    
 }
 
 
@@ -255,14 +300,6 @@ function operate(expr) {
 }
 
         
-
-
-
-
-
-
-
-
 
 
 
