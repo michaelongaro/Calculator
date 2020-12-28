@@ -1,132 +1,25 @@
-#main-calculator-container {
+#main-grid-contain {
     display: grid;
-    width: 400px;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 3fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-areas:
-        "display display display display"
-        "misc misc misc misc"
-        "digits digits digits operators"
-        "digits digits digits operators"
-        "digits digits digits operators"
-        "digits digits digits operators";
-    justify-content: center;
-    grid-gap: 5px;
+    
+    grid-gap: 10px;
+}
+
+button {
+    display: block;
+    margin-top: 50px;
+}
+
+#main-grid-contain > div {
+    color: black;
+    background-color: #FFFFFF;
+    color: #fff;
+    border-radius: 5px;
+    border-color: black;
     border-style: solid;
-    border-color: lightskyblue;
+    padding: 10px;
 }
 
-#display {
-    grid-area: display;
-}
 
-.operator-button {
-    grid-area: operators;
-}
-
-.digit-button {
-    grid-area: digits;
-}
-
-.misc-button {
-    grid-area: misc;
-}
-
-/* need to look at how to center display text */
-#display {
-    grid-area: 1 / 1 / 2 / 5;
-    text-align: right;
-    vertical-align: middle;
-}
-
-#operators {
-    grid-area: 3 / 4 / 7 / 5;
-}
-
-#digits {
-    grid-area: 3 / 1 / 7 / 4;
-}
-
-#misc {
-    grid-area: 2 / 1 / 3 / 5;
-}
-
-#posneg {
-    grid-area: 2 / 1 / 3 / 2;
-}
-
-#percent {
-    grid-area: 2 / 2 / 3 / 3;
-}
-
-#sqrt {
-    grid-area: 2 / 3 / 3 / 4;
-}
-
-#miscone {
-    grid-area: 2 / 4 / 3 / 5;
-}
-
-#seven {
-    grid-area: 3 / 1 / 4 / 2;
-}
-
-#eight {
-    grid-area: 3 / 2 / 4 / 3;
-}
-
-#nine {
-    grid-area: 3 / 3 / 4 / 4;
-}
-
-#six {
-    grid-area: 4/ 3 / 5 / 4;
-}
-
-#five {
-    grid-area: 4 / 2 / 5 / 3;
-}
-
-#four {
-    grid-area: 4/ 1 / 5 / 2;
-}
-
-#three {
-    grid-area: 5 / 3 / 6 / 4;
-}
-
-#two {
-    grid-area: 5 / 2 / 6 / 3;
-}
-
-#one {
-    grid-area: 5 / 1 / 6 / 2;
-}
-
-#clear {
-    grid-area: 6 / 1 / 7 / 2;
-}
-
-#zero {
-    grid-area: 6 / 2 / 7 / 3;
-}
-
-#decimal {
-    grid-area: 6 / 3 / 7 / 4;
-}
-
-#divide {
-    grid-area: 3 / 4 / 4 / 5;
-}
-
-#mult {
-    grid-area: 4 / 4 / 5 / 5;
-}
-
-#sub {
-    grid-area: 5 / 4 / 6 / 5;
-}
-
-#add {
-    grid-area: 6 / 4 / 7 / 5;
-}
+#main-grid-contain > div.darkcell {
+    background-color: #444;
+}   
