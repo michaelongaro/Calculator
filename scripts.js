@@ -1,148 +1,272 @@
-let randomized = false;
-let showTrail = true;
-let timesPassedOver = 0;
-let cellArr;
-let newSize;
-let currentSelectedID;
-let isntInitialGrid = false;
-let updatedCellWidth = 240;
+let firstNumber = undefined;
+let secondNumber = undefined;
+let currentOperator = undefined;
+let previousOperator = undefined;
+let tempResult = 0;
+let evalExpression = "";
+let totalValue = undefined;
+let allowedOperator = undefined;
 
+window.onload = function () {
+    
+    $("#seven")
+        .click(function () {
+            evalExpression += "7";
+            document.getElementById("display").innerHTML += "7";
+        })
 
-window.onload = function() { 
-    startingGrid(4);
-    document.getElementById("main-grid-contain").style.gridTemplateColumns = `repeat(4, ${updatedCellWidth.toString()}px)`;
-    console.log(`${updatedCellWidth.toString()}px`);     
-    newSize = 16;
-    cellArr = new Array(newSize).fill(0);
+    $("#eight")
+        .click(function () {
+            evalExpression += "8";
+            document.getElementById("display").innerHTML += "8";
+        })
+
+    $("#nine")
+        .click(function () {
+            evalExpression += "9";
+            document.getElementById("display").innerHTML += "9";
+        })
+
+    $("#four")
+        .click(function () {
+            evalExpression += "4";
+            document.getElementById("display").innerHTML += "4";
+        })
+
+    $("#five")
+        .click(function () {
+            evalExpression += "5";
+            document.getElementById("display").innerHTML += "5";
+        })
+
+    $("#six")
+        .click(function () {
+            evalExpression += "6";
+            document.getElementById("display").innerHTML += "6";
+        })
+
+    $("#one")
+        .click(function () {
+            evalExpression += "1";
+            document.getElementById("display").innerHTML += "1";
+        })
+
+    $("#two")
+        .click(function () {
+            evalExpression += "2";
+            document.getElementById("display").innerHTML += "2";
+        })
+
+    $("#three")
+        .click(function () {
+            evalExpression += "3";
+            document.getElementById("display").innerHTML += "3";
+        })
+
+    $("#zero")
+        .click(function () {
+            evalExpression += "0";
+            document.getElementById("display").innerHTML += "0";
+        })
+
+    $("#decimal")
+        .click(function () {
+            evalExpression += ".";
+            document.getElementById("decimal").disabled = true;
+            document.getElementById("display").innerHTML += ".";
+        })
     
-    /* going to need to figure out how to select ALL divs (aka use #main-grid-contain > div) here to 
-        scale heights as well. maybe need jquery here too? */
     
+    $("#divide")
+        .click(function () {
+            /* still want to change only one op at a time EXCEPT FOR '-' */
+            evalExpression += " / ";
+            document.getElementById("decimal").disabled = false;
+            document.getElementById("display").innerHTML += " / ";
+        })
+
+    $("#mult")
+        .click(function () {
+            
+            evalExpression += " * ";
+            document.getElementById("decimal").disabled = false;
+            document.getElementById("display").innerHTML += " * ";
+        })
+
+    $("#sub")
+        .click(function () {
+            if (allowedOperator == "/" || allowedOperator == "*") {
+                evalExpression += "-";
+            }
+            else {
+                evalExpression += " - ";
+            }
+            document.getElementById("decimal").disabled = false;
+            document.getElementById("display").innerHTML += " - ";
+        })
+
+    $("#add")
+        .click(function () {
+            evalExpression += " + ";
+            document.getElementById("decimal").disabled = false;
+            document.getElementById("display").innerHTML += " + ";
+        })
     
-    $("#change-grid-size") 
-        .click(function() {
-            resetGrid();
-            newSize = parseInt(prompt("Please enter desired number of cells", "4"));
-            isntInitialGrid = true;
-            startingGrid(newSize);
-            cellArr = new Array(newSize ** 2).fill(0);
-            document.getElementById("main-grid-contain").style.gridTemplateColumns = `repeat(${newSize} , ${(updatedCellWidth/newSize).toString()}px)`;
+    $("#equals")
+        .click(function () {
+            document.getElementById("decimal").disabled = false;
+            operate(evalExpression);
+            document.getElementById("display").innerHTML = evalExpression;
+        })
+
+    $("#clear")
+        .click(function () {
+            firstNumber = undefined;
+            secondNumber = undefined;
+            currentOperator = undefined;
+            evalExpression = "";
+            document.getElementById("display").innerHTML = "";
+        })
+
+    $("#sqrt")
+        .click(function () {
+            evalExpression = Math.sqrt(evalExpression);
+            document.getElementById("display").innerHTML = evalExpression;
     })
     
-    $("#randomize-colors")
-        .click(function() {
-        if (!randomized) {
-            randomized = true;
-            console.log(randomized);
-        }
-        else {
-            randomized = false;
-            console.log(randomized);
-        }
-        cellArr = new Array(newSize ** 2).fill(0);
-    });
-    
-    $("#trail-toggle")
-        .click(function() {
-        if (!showTrail) {
-            showTrail = true;
-            console.log(showTrail);
-        }
-        else {
-            showTrail = false;
-            console.log(showTrail);
-        }
-        cellArr = new Array(newSize ** 2).fill(0);
+    $("#percent")
+        .click(function () {
+            evalExpression = evalExpression / 100;
+            document.getElementById("display").innerHTML = evalExpression;
     })
     
-    $("#main-grid-contain div")
-    
-            .mouseover(function() {
-                    currentSelectedID = $(this).attr("id").slice(4);
-                    currentSelectedID = parseInt(currentSelectedID) - 1;
-                    if (cellArr[currentSelectedID] < 10) {
-                        cellArr[currentSelectedID]++;
-                        console.log(cellArr);
-                        console.log(currentSelectedID);
-                    }
-                    else {
-
-                    }
-                    
-                    if (randomized) {
-                        $(this).css("background-color", `rgba(${applyRandomColor()}, ${applyRandomColor()}, ${applyRandomColor()}, ${cellArr[currentSelectedID] * 0.1})`);
-                        console.log("hit");
-                    }
-                    else {
-                        $(this).css("background-color", `rgba(0, 0, 0, ${cellArr[currentSelectedID] * 0.1})`);
-                        /*$(this).toggleClass("darkcell");*/   
-                    }
+    $("#posneg")
+        .click(function () {
+            /* look how and if you would want a switch statement implemented here */
+            console.log(typeof evalExpression);
+            if (evalExpression.includes("+")) {
+                console.log("hello");
+            }
+            else if (evalExpression.includes("-")) {
                 
-            })
+            }
+            else if (evalExpression.includes("*")) {
+                
+            }
+            else if (evalExpression.includes("/")) {
+                
+            }
+            else {
+                evalExpression = (parseFloat(evalExpression) * -1).toString();
+                console.log(evalExpression);
+                document.getElementById("display").innerHTML = evalExpression;
+            }
+    })
     
-            
-            .mouseout(function() {
-                if (!showTrail) {
-                    $(this).css("background-color", "#FFFFFF");
-                }
-            })
     
-            
-    
+/* figure out what you want to do with these
+            else if (operation == "%") {
+                return operate(num1, num2, previousOperator) / 100;
+            }
+
+            else if (operation == "+/-") {
+                return num1 * num2;
+            } */
+
+}
+
+function checkOperatorOrder(expressionString) {
+    let splitOp = expressionString[-2];
+    switch (splitOp) {
+        case "*":
+            return true;
+        case "/":
+            return true;
+        case "+":
+            return true;
+        case "-":
+            return true;
+    }
 }
 
 
-function applyRandomColor() {
-    return Math.floor(Math.random(0, 1) * 255);
-}
-
-
-function resetGrid() {
-    $("#main-grid-contain").children().remove();
+function operate(expr) {
+    console.log(evalExpression);
+    evalExpression = evalExpression.split(' ');
+    console.log(evalExpression);
     
-}
-
-function startingGrid(num) {
-    let idcounter = 1;
-    for (let i = 0; i < num ** 2; i++) {
-        let gridCell = document.createElement("div");
-        if (i !== 0) {
-            idcounter++;
+    
+    
+    
+    for (let i = 0; i < evalExpression.length; i++) {
+        if (isNaN(evalExpression[i])) {
+            currentOperator = evalExpression[i];
         }
-        gridCell.setAttribute("id", "cell" + idcounter.toString());
+        else if (!isNaN(evalExpression[i]) && firstNumber == undefined) {
+            firstNumber = parseFloat(evalExpression[i]);
+        }
+        else if ((!isNaN(evalExpression[i]) && firstNumber != undefined) && secondNumber == undefined) {
+            secondNumber = parseFloat(evalExpression[i]);
+        }
 
-        document.getElementById("main-grid-contain").appendChild(gridCell);
+        /* need an edge case for if there is no totalValue, aka the first set of numbers being operated on */
+        /* simplify this greatly with just destringing(?) the currentOperator */
+        /* have syntax error displayed somewhere / handle it properly if operator w/ no 2nd num is entered and -> "=" is pressed */
+        /* if equals button is pressed while no extra buttons or anything have been pressed, repeat the calculation on the current 
+                value */
+        /* make the decimal button work */
+        if (firstNumber != undefined && secondNumber != undefined) {
+            console.log(firstNumber, secondNumber);
+            
+            if (currentOperator == "/") {
+                if (secondNumber == 0) {
+                    alert("Error: Cannot divide by zero!");
+                
+                    firstNumber = undefined;
+                    secondNumber = undefined;
+                    currentOperator = undefined;
+                    evalExpression = "";
+                    document.getElementById("display").innerHTML = "";
+                }
+                firstNumber = firstNumber / secondNumber;
+            }
+
+            else if (currentOperator == "*") {
+                firstNumber = firstNumber * secondNumber;
+            }
+
+            else if (currentOperator == "-") {
+                firstNumber = firstNumber - secondNumber;
+            }
+
+            else if (currentOperator == "+") {
+                firstNumber = firstNumber + secondNumber;
+            }
+
+
+            else {
+                return "error has occured, no valid operator";
+            }
+            
+            secondNumber = undefined;
+        }
     }
-    
-    if (isntInitialGrid) {
-    
-         $("#main-grid-contain div")
-                .mouseover(function() {
-                        let currentSelectedID = $(this).attr("id").slice(4);
-                        currentSelectedID = parseInt(currentSelectedID) - 1;
-                        if (cellArr[currentSelectedID] < 10) {
-                            cellArr[currentSelectedID]++;
-                        }
-                        else {
-
-                        }
-
-                        if (randomized) {
-                            $(this).css("background-color", `rgba(${applyRandomColor()}, ${applyRandomColor()}, ${applyRandomColor()}, ${cellArr[currentSelectedID] * 0.1})`);
-                            console.log("hit");
-                        }
-                        else {
-                            $(this).css("background-color", `rgba(0, 0, 0, ${cellArr[currentSelectedID] * 0.1})`);
-                            /*$(this).toggleClass("darkcell");*/   
-                        }
-
-                })
-
-                .mouseout(function() {
-                    if (!showTrail) {
-                        $(this).css("background-color", "#FFFFFF");
-                    }
-                })
-    }
+    evalExpression = firstNumber.toString();
 }
-    
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
