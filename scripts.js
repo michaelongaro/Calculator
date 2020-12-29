@@ -11,65 +11,85 @@ let addBool = false;
 let subBool = false;
 let multBool = false;
 let divBool = false;
+let firstOperator = undefined;
+let secondOperator = undefined;
+let negativeCounter 
+let currentViewingWindow = "";
+let tempOperator = "";
+
+let spliceOldExpr = (oldexp, newexp) => oldexp.split(newexp).join("");
+
 
 window.onload = function () {
     
+    /* use ur head on the number(s) here, you got this */
+    
     $("#seven")
         .click(function () {
+            cVWChecker(currentViewingWindow);
             evalExpression += "7";
             document.getElementById("display").innerHTML += "7";
         })
 
     $("#eight")
         .click(function () {
+            cVWChecker(currentViewingWindow);
             evalExpression += "8";
             document.getElementById("display").innerHTML += "8";
         })
 
     $("#nine")
         .click(function () {
+            cVWChecker(currentViewingWindow);
             evalExpression += "9";
             document.getElementById("display").innerHTML += "9";
         })
 
     $("#four")
         .click(function () {
+            cVWChecker(currentViewingWindow);
             evalExpression += "4";
             document.getElementById("display").innerHTML += "4";
         })
 
     $("#five")
         .click(function () {
+            cVWChecker(currentViewingWindow);
             evalExpression += "5";
             document.getElementById("display").innerHTML += "5";
         })
 
     $("#six")
         .click(function () {
+            cVWChecker(currentViewingWindow);
             evalExpression += "6";
             document.getElementById("display").innerHTML += "6";
         })
 
     $("#one")
         .click(function () {
+            cVWChecker(currentViewingWindow);
             evalExpression += "1";
             document.getElementById("display").innerHTML += "1";
         })
 
     $("#two")
         .click(function () {
+            cVWChecker(currentViewingWindow);
             evalExpression += "2";
             document.getElementById("display").innerHTML += "2";
         })
 
     $("#three")
         .click(function () {
+            cVWChecker(currentViewingWindow);
             evalExpression += "3";
             document.getElementById("display").innerHTML += "3";
         })
 
     $("#zero")
         .click(function () {
+            cVWChecker(currentViewingWindow);
             evalExpression += "0";
             document.getElementById("display").innerHTML += "0";
         })
@@ -84,50 +104,38 @@ window.onload = function () {
     
     $("#divide")
         .click(function () {
-            /* still want to change only one op at a time EXCEPT FOR '-' */
-            if (checkOperatorOrder(evalExpression)) {
-                console.log(evalExpression.substr(0, -3));
-                evalExpression = evalExpression.substr(0, -3) + " / ";
-            }
-            else {
-                evalExpression += " / ";
-            }
+            cVWChecker(currentViewingWindow);
+            evalExpression += " / ";
+            currentViewingWindow = "/"
             document.getElementById("decimal").disabled = false;
-            document.getElementById("display").innerHTML += " / ";
+            document.getElementById("display").innerHTML += currentViewingWindow;
         })
 
     $("#mult")
         .click(function () {
-            
+            cVWChecker(currentViewingWindow);
             evalExpression += " * ";
+            currentViewingWindow = "*"
             document.getElementById("decimal").disabled = false;
-            document.getElementById("display").innerHTML += " * ";
+            document.getElementById("display").innerHTML += currentViewingWindow;
         })
 
     $("#sub")
         .click(function () {
-            if (allowedOperator == "/" || allowedOperator == "*") {
-                evalExpression += "-";
-            }
-            else {
-                evalExpression += " - ";
-            }
+            cVWChecker(currentViewingWindow);
+            evalExpression += " - ";
+            currentViewingWindow = "-"
             document.getElementById("decimal").disabled = false;
-            document.getElementById("display").innerHTML += " - ";
+            document.getElementById("display").innerHTML += currentViewingWindow;
         })
 
     $("#add")
         .click(function () {
-            if (addBool) {
-                
-            }
-            else {
-                /* validate new operator here (?) */
-                stagedOperator = " + ";
-            }
-            evalExpression += stagedOperator;
+            cVWChecker(currentViewingWindow);
+            evalExpression += " + ";
+            currentViewingWindow = "+"
             document.getElementById("decimal").disabled = false;
-            document.getElementById("display").innerHTML += " + ";
+            document.getElementById("display").innerHTML += currentViewingWindow;
         })
     
     $("#equals")
@@ -162,19 +170,8 @@ window.onload = function () {
         .click(function () {
             /* look how and if you would want a switch statement implemented here */
             console.log(typeof evalExpression);
-            if (evalExpression.includes("+")) {
-                console.log("hello");
-            }
-            else if (evalExpression.includes("-")) {
-                
-            }
-            else if (evalExpression.includes("*")) {
-                
-            }
-            else if (evalExpression.includes("/")) {
-                
-            }
-            else {
+            if (typeof currentViewingWindow == "number") {
+                /* see if this works */
                 evalExpression = (parseFloat(evalExpression) * -1).toString();
                 console.log(evalExpression);
                 document.getElementById("display").innerHTML = evalExpression;
@@ -192,46 +189,46 @@ window.onload = function () {
 
 }
 
-function checkOperatorOrder(givenOp) {
-    /* make arr of len 4, and add up total of arr, if > 0,
-            then reset all operators, and put new one in (spec. case on '-') */
-    /* opArr.reduce((a, b) => a + b, 0); should give the sum */
-    for (let p = 0; p < opArr.length; p++) {
-            if (givenOp == "+") {
-                if (!opArr[0]) {
-                    evalExpression += " + ";
-                }
-            }
-            else if (givenOp == "-") {
-                
-            }
-            else if (givenOp == "*") {
-                
-            }
-            else if (givenOp == "/") {
-                
-            } 
+function cVWChecker(cVW) {
+    /* how to do regex here? */
+    if (evalExpression[-3] == " + ") {
+        evalExpression = evalExpression[-3];
+    }
+    if (evalExpression[-3] == " - ") {
+        evalExpression = evalExpression[-3];
+    }
+    if (evalExpression[-3] == " * ") {
+        evalExpression = evalExpression[-3];
+    }
+    if (evalExpression[-3] == " / ") {
+        evalExpression = evalExpression[-3];
     }
     
-    else {
-        stagedOperator = "";
-        /* maybe need to reset arr with zeros across board */
-        switch (givenOp) {
-            case "+":
-                opArr[0] += 1;
-                return " + ";
-            case "-":
-                opArr[1] += 1;
-                return " - ";
-            case "*":
-                opArr[2] += 1;
-                return " * ";
-            case "/":
-                opArr[3] += 1;
-                return " / ";
-        }
-    }
+    /* update all of this bs to format above and reduce clutter */
     
+    if (cVW == "+") {
+        currentViewingWindow == "";
+        document.getElementById("display").innerHTML = "";
+        return "op";
+    }
+    else if (cVW == "-") {
+        currentViewingWindow == "";
+        document.getElementById("display").innerHTML = "";
+        return "op";
+    }
+    else if (cVW == "*") {
+        currentViewingWindow == "";
+        document.getElementById("display").innerHTML = "";
+        return "op";
+    }
+    else if (cVW == "/") {
+        currentViewingWindow == "";
+        document.getElementById("display").innerHTML = "";
+        return "op";
+    }
+    else if (typeof parseFloat(cVW) == "number") {
+        return "num";
+    }
 }
 
 
