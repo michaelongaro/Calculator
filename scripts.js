@@ -23,6 +23,7 @@ let spliceOldExpr = (oldexp, newexp) => oldexp.split(newexp).join("");
 window.onload = function () {
     
     /* use ur head on the number(s) here, you got this */
+    /* also read up on basics of regex */
     
     $("#seven")
         .click(function () {
