@@ -1,235 +1,44 @@
 let firstNumber = undefined;
 let secondNumber = undefined;
 let currentOperator = undefined;
-let previousOperator = undefined;
-let tempResult = 0;
+
 let evalExpression = "";
-let totalValue = undefined;
-let stagedOperator = undefined;
-let opArr = new Array(4).fill(false);
-let addBool = false;
-let subBool = false;
-let multBool = false;
-let divBool = false;
-let firstOperator = undefined;
-let secondOperator = undefined;
-let negativeCounter 
-let currentViewingWindow = "";
-let tempOperator = "";
 
-let spliceOldExpr = (oldexp, newexp) => oldexp.split(newexp).join("");
-
-
-window.onload = function () {
-    
-    /* use ur head on the number(s) here, you got this */
-    /* also read up on basics of regex */
-    
-    $("#seven")
-        .click(function () {
-            cVWChecker(currentViewingWindow);
-            evalExpression += "7";
-            document.getElementById("display").innerHTML += "7";
-        })
-
-    $("#eight")
-        .click(function () {
-            cVWChecker(currentViewingWindow);
-            evalExpression += "8";
-            document.getElementById("display").innerHTML += "8";
-        })
-
-    $("#nine")
-        .click(function () {
-            cVWChecker(currentViewingWindow);
-            evalExpression += "9";
-            document.getElementById("display").innerHTML += "9";
-        })
-
-    $("#four")
-        .click(function () {
-            cVWChecker(currentViewingWindow);
-            evalExpression += "4";
-            document.getElementById("display").innerHTML += "4";
-        })
-
-    $("#five")
-        .click(function () {
-            cVWChecker(currentViewingWindow);
-            evalExpression += "5";
-            document.getElementById("display").innerHTML += "5";
-        })
-
-    $("#six")
-        .click(function () {
-            cVWChecker(currentViewingWindow);
-            evalExpression += "6";
-            document.getElementById("display").innerHTML += "6";
-        })
-
-    $("#one")
-        .click(function () {
-            cVWChecker(currentViewingWindow);
-            evalExpression += "1";
-            document.getElementById("display").innerHTML += "1";
-        })
-
-    $("#two")
-        .click(function () {
-            cVWChecker(currentViewingWindow);
-            evalExpression += "2";
-            document.getElementById("display").innerHTML += "2";
-        })
-
-    $("#three")
-        .click(function () {
-            cVWChecker(currentViewingWindow);
-            evalExpression += "3";
-            document.getElementById("display").innerHTML += "3";
-        })
-
-    $("#zero")
-        .click(function () {
-            cVWChecker(currentViewingWindow);
-            evalExpression += "0";
-            document.getElementById("display").innerHTML += "0";
-        })
-
-    $("#decimal")
-        .click(function () {
-            evalExpression += ".";
-            document.getElementById("decimal").disabled = true;
-            document.getElementById("display").innerHTML += ".";
-        })
-    
-    
-    $("#divide")
-        .click(function () {
-            cVWChecker(currentViewingWindow);
-            evalExpression += " / ";
-            currentViewingWindow = "/"
-            document.getElementById("decimal").disabled = false;
-            document.getElementById("display").innerHTML += currentViewingWindow;
-        })
-
-    $("#mult")
-        .click(function () {
-            cVWChecker(currentViewingWindow);
-            evalExpression += " * ";
-            currentViewingWindow = "*"
-            document.getElementById("decimal").disabled = false;
-            document.getElementById("display").innerHTML += currentViewingWindow;
-        })
-
-    $("#sub")
-        .click(function () {
-            cVWChecker(currentViewingWindow);
-            evalExpression += " - ";
-            currentViewingWindow = "-"
-            document.getElementById("decimal").disabled = false;
-            document.getElementById("display").innerHTML += currentViewingWindow;
-        })
-
-    $("#add")
-        .click(function () {
-            cVWChecker(currentViewingWindow);
-            evalExpression += " + ";
-            currentViewingWindow = "+"
-            document.getElementById("decimal").disabled = false;
-            document.getElementById("display").innerHTML += currentViewingWindow;
-        })
-    
-    $("#equals")
-        .click(function () {
-            document.getElementById("decimal").disabled = false;
-            operate(evalExpression);
-            document.getElementById("display").innerHTML = evalExpression;
-        })
-
-    $("#clear")
-        .click(function () {
-            firstNumber = undefined;
-            secondNumber = undefined;
-            currentOperator = undefined;
-            evalExpression = "";
-            document.getElementById("display").innerHTML = "";
-        })
-
-    $("#sqrt")
-        .click(function () {
-            evalExpression = Math.sqrt(evalExpression);
-            document.getElementById("display").innerHTML = evalExpression;
-    })
-    
-    $("#percent")
-        .click(function () {
-            evalExpression = evalExpression / 100;
-            document.getElementById("display").innerHTML = evalExpression;
-    })
-    
-    $("#posneg")
-        .click(function () {
-            /* look how and if you would want a switch statement implemented here */
-            console.log(typeof evalExpression);
-            if (typeof currentViewingWindow == "number") {
-                /* see if this works */
-                evalExpression = (parseFloat(evalExpression) * -1).toString();
-                console.log(evalExpression);
-                document.getElementById("display").innerHTML = evalExpression;
-            }
-    })
-    
-    
-/* figure out what you want to do with these
-            else if (operation == "%") {
-                return operate(num1, num2, previousOperator) / 100;
-            }
-            else if (operation == "+/-") {
-                return num1 * num2;
-            } */
-
+function appendAndDisplay(num) {
+    /* LOGICALLY why doesn't this work */
+    /* STEP THROUGH THE CODE, IF YOU THINK YOU UNDERSTAND SOMETHING: CHALLENGE IT */
+    evalExpression += num;
+    evalExpression = cVWChecker(evalExpression);
+    document.getElementById("display").innerHTML += num;
 }
 
-function cVWChecker(cVW) {
+
+function cVWChecker(expToCheck) {
     /* how to do regex here? */
-    if (evalExpression[-3] == " + ") {
-        evalExpression = evalExpression[-3];
+    let changethislater = "";
+    if (expToCheck.length > 3) {
+        console.log(expToCheck.length, expToCheck);
+        if (expToCheck.substr(-3) == " + ") {
+            changethislater = expToCheck.substr(-3);    
+            document.getElementById("display").innerHTML = "";
+        }
+        if (expToCheck.substr(-3) == " - ") {
+            changethislater = expToCheck.substr(-3);
+            document.getElementById("display").innerHTML = "";
+        }
+        if (expToCheck.substr(-3) == " * ") {
+            changethislater = expToCheck.substr(-3);
+            document.getElementById("display").innerHTML = "";
+        }
+        if (expToCheck.substr(-3) == " / ") {
+            changethislater = expToCheck.substr(-3);
+            document.getElementById("display").innerHTML = "";
+        }
+        console.log(changethislater, changethislater.length);
+        return changethislater;   
     }
-    if (evalExpression[-3] == " - ") {
-        evalExpression = evalExpression[-3];
-    }
-    if (evalExpression[-3] == " * ") {
-        evalExpression = evalExpression[-3];
-    }
-    if (evalExpression[-3] == " / ") {
-        evalExpression = evalExpression[-3];
-    }
-    
-    /* update all of this bs to format above and reduce clutter */
-    
-    if (cVW == "+") {
-        currentViewingWindow == "";
-        document.getElementById("display").innerHTML = "";
-        return "op";
-    }
-    else if (cVW == "-") {
-        currentViewingWindow == "";
-        document.getElementById("display").innerHTML = "";
-        return "op";
-    }
-    else if (cVW == "*") {
-        currentViewingWindow == "";
-        document.getElementById("display").innerHTML = "";
-        return "op";
-    }
-    else if (cVW == "/") {
-        currentViewingWindow == "";
-        document.getElementById("display").innerHTML = "";
-        return "op";
-    }
-    else if (typeof parseFloat(cVW) == "number") {
-        return "num";
-    }
+    console.log(expToCheck);
+    return expToCheck;
 }
 
 
@@ -297,8 +106,166 @@ function operate(expr) {
     evalExpression = firstNumber.toString();
 }
 
-        
+window.onload = function () {
+    
+    /* use ur head on the number(s) here, you got this */
+    /* also read up on basics of regex */
+    
+    $("#seven")
+        .click(function () {
+            appendAndDisplay("7");
+            
+        })
 
+    $("#eight")
+        .click(function () {
+            appendAndDisplay("8");
+            
+            console.log(evalExpression);
+        })
+
+    $("#nine")
+        .click(function () {
+            appendAndDisplay("9");
+            
+            console.log(evalExpression);    
+        })
+
+    $("#four")
+        .click(function () {
+            appendAndDisplay("4");
+            
+        })
+
+    $("#five")
+        .click(function () {
+            appendAndDisplay("5");
+            
+        })
+
+    $("#six")
+        .click(function () {
+            appendAndDisplay("6");
+            
+        })
+
+    $("#one")
+        .click(function () {
+            appendAndDisplay("1");
+            
+        })
+
+    $("#two")
+        .click(function () {
+            appendAndDisplay("2");
+            
+        })
+
+    $("#three")
+        .click(function () {
+            appendAndDisplay("3");
+            
+        })
+
+    $("#zero")
+        .click(function () {
+            appendAndDisplay("0");
+            
+        })
+
+    $("#decimal")
+        .click(function () {
+            evalExpression += ".";
+            document.getElementById("decimal").disabled = true;
+            document.getElementById("display").innerHTML += ".";
+        })
+    
+    
+    $("#divide")
+        .click(function () {
+            evalExpression += " / ";
+            evalExpression = cVWChecker(evalExpression);
+            document.getElementById("decimal").disabled = false;
+            document.getElementById("display").innerHTML += "/";
+        })
+
+    $("#mult")
+        .click(function () {
+            evalExpression += " * ";
+            evalExpression = cVWChecker(evalExpression);
+            document.getElementById("decimal").disabled = false;
+            document.getElementById("display").innerHTML += "*";
+        })
+
+    $("#sub")
+        .click(function () {
+            evalExpression += " - ";
+            evalExpression = cVWChecker(evalExpression);
+            document.getElementById("decimal").disabled = false;
+            document.getElementById("display").innerHTML += "-";
+        })
+
+    $("#add")
+        .click(function () {
+            evalExpression += " + ";
+            evalExpression = cVWChecker(evalExpression);
+            document.getElementById("decimal").disabled = false;
+            document.getElementById("display").innerHTML += "+";
+        })
+    
+    $("#equals")
+        .click(function () {
+            document.getElementById("decimal").disabled = false;
+            operate(evalExpression);
+            document.getElementById("display").innerHTML = evalExpression;
+        })
+
+    $("#clear")
+        .click(function () {
+            firstNumber = undefined;
+            secondNumber = undefined;
+            currentOperator = undefined;
+            evalExpression = "";
+            document.getElementById("display").innerHTML = "";
+        })
+
+    $("#sqrt")
+        .click(function () {
+            evalExpression = Math.sqrt(evalExpression);
+            document.getElementById("display").innerHTML = evalExpression;
+    })
+    
+    $("#percent")
+        .click(function () {
+            evalExpression = evalExpression / 100;
+            document.getElementById("display").innerHTML = evalExpression;
+    })
+    
+    $("#posneg")
+        .click(function () {
+            /* look how and if you would want a switch statement implemented here */
+            console.log(typeof evalExpression);
+            if (typeof currentViewingWindow == "number") {
+                /* see if this works */
+                evalExpression = (parseFloat(evalExpression) * -1).toString();
+                console.log(evalExpression);
+                document.getElementById("display").innerHTML = evalExpression;
+            }
+    })
+    
+    
+/* figure out what you want to do with these
+            else if (operation == "%") {
+                return operate(num1, num2, previousOperator) / 100;
+            }
+            else if (operation == "+/-") {
+                return num1 * num2;
+            } */
+
+}
+
+
+        
 
 
 
