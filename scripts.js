@@ -7,8 +7,11 @@ let evalExpression = "";
 function appendAndDisplay(num) {
     /* LOGICALLY why doesn't this work */
     /* STEP THROUGH THE CODE, IF YOU THINK YOU UNDERSTAND SOMETHING: CHALLENGE IT */
+    
+    /* should check if you need to clear disp first */
+    evalExpression = cVWChecker(evalExpression);    
     evalExpression += num;
-    evalExpression = cVWChecker(evalExpression);
+    
     document.getElementById("display").innerHTML += num;
 }
 
@@ -16,28 +19,30 @@ function appendAndDisplay(num) {
 function cVWChecker(expToCheck) {
     /* how to do regex here? */
     let changethislater = "";
-    if (expToCheck.length > 3) {
-        console.log(expToCheck.length, expToCheck);
-        if (expToCheck.substr(-3) == " + ") {
-            changethislater = expToCheck.substr(-3);    
-            document.getElementById("display").innerHTML = "";
-        }
-        if (expToCheck.substr(-3) == " - ") {
-            changethislater = expToCheck.substr(-3);
-            document.getElementById("display").innerHTML = "";
-        }
-        if (expToCheck.substr(-3) == " * ") {
-            changethislater = expToCheck.substr(-3);
-            document.getElementById("display").innerHTML = "";
-        }
-        if (expToCheck.substr(-3) == " / ") {
-            changethislater = expToCheck.substr(-3);
-            document.getElementById("display").innerHTML = "";
-        }
-        console.log(changethislater, changethislater.length);
-        return changethislater;   
+        /*console.log(expToCheck.length, expToCheck);*/
+        
+    if (expToCheck.substr(-3) == " + ") {
+        changethislater = expToCheck.substr(0, -3);    
+        document.getElementById("display").innerHTML = "";
     }
-    console.log(expToCheck);
+    if (expToCheck.substr(-3) == " - ") {
+        changethislater = expToCheck.substr(0, -3);
+        document.getElementById("display").innerHTML = "";
+    }
+    if (expToCheck.substr(-3) == " * ") {
+        changethislater = expToCheck.substr(0, -3);
+        document.getElementById("display").innerHTML = "";
+    }
+    if (expToCheck.substr(-3) == " / ") {
+        changethislater = expToCheck.substr(0, -3);
+        document.getElementById("display").innerHTML = "";
+    }
+        
+        /*console.log(changethislater, changethislater.length);*/
+        
+        return changethislater;   
+    
+    /* console.log(expToCheck); */  
     return expToCheck;
 }
 
@@ -183,32 +188,32 @@ window.onload = function () {
     
     $("#divide")
         .click(function () {
-            evalExpression += " / ";
             evalExpression = cVWChecker(evalExpression);
+            evalExpression += " / ";
             document.getElementById("decimal").disabled = false;
             document.getElementById("display").innerHTML += "/";
         })
 
     $("#mult")
         .click(function () {
-            evalExpression += " * ";
             evalExpression = cVWChecker(evalExpression);
+            evalExpression += " * ";
             document.getElementById("decimal").disabled = false;
             document.getElementById("display").innerHTML += "*";
         })
 
     $("#sub")
         .click(function () {
-            evalExpression += " - ";
             evalExpression = cVWChecker(evalExpression);
+            evalExpression += " - ";
             document.getElementById("decimal").disabled = false;
             document.getElementById("display").innerHTML += "-";
         })
 
     $("#add")
         .click(function () {
-            evalExpression += " + ";
             evalExpression = cVWChecker(evalExpression);
+            evalExpression += " + ";
             document.getElementById("decimal").disabled = false;
             document.getElementById("display").innerHTML += "+";
         })
@@ -266,9 +271,5 @@ window.onload = function () {
 
 
         
-
-
-
-
 
 
